@@ -71,7 +71,8 @@ composer.on("message", checkIfGroup, async ctx => {
     }
         
     //Add msg to markov chain
-    ctx.session.markov.add(ctx.message.text.split(' '));
+    const msg = ctx.message.text || ctx.message.caption;
+    ctx.session.markov.add(msg.split(' '));
 
     //Insert a probability that markov chain will generate a message
     if(Math.random() <= talking_probability) {
