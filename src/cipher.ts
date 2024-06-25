@@ -1,4 +1,4 @@
-import { createCipheriv, createDecipheriv, randomBytes, scryptSync } from 'crypto';
+import { createCipheriv, createDecipheriv, createHash, randomBytes, scryptSync } from 'crypto';
 
 // Encrypt function
 export function encrypt(text: string, key: string): string {
@@ -41,4 +41,9 @@ export function decrypt(encryptedText: string, key: string): string {
     decrypted += decipher.final('utf8');
 
     return decrypted;
+}
+
+//Hash group ID function
+export function hashGroupID(groupID: string): string {
+    return createHash('sha256').update(groupID).digest('hex');
 }
