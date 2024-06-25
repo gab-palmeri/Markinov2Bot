@@ -60,16 +60,25 @@ composer.on("message", checkIfGroup, async ctx => {
 
         }, 1000 * 60 * 5);
     }
+
+    let talking_probability = 0.2;
+    const replying_probability = 0.3;
+
+    //if the message is replying to a bot message, increase probability
+    if(ctx.message.reply_to_message != null && ctx.message.reply_to_message.from.id == ctx.me.id) {
+        talking_probability = 0.6;
+        console.log("bot replied");
+    }
         
     //Add msg to markov chain
     ctx.session.markov.add(ctx.message.text.split(' '));
 
     //Insert a probability that markov chain will generate a message
-    if(Math.random() <= 0.2) {
+    if(Math.random() <= talking_probability) {
         const result = ctx.session.markov.generate();
 
         //also insert a probability that it will reply to the last message
-        if(Math.random() <= 0.3) {
+        if(Math.random() <= replying_probability) {
             await ctx.reply(result, { reply_to_message_id: ctx.message.message_id });
         }
         else {
