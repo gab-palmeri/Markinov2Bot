@@ -75,5 +75,14 @@ export default class MarkovChainWrapper {
             fs.writeFileSync(newFilePath, newFileDataEncrypted);
             fs.unlinkSync(filePath);       
         }
-    }   
+    }  
+    
+    public static eraseModelFile(groupID: string) {
+        const fileName = hashGroupID(groupID);
+        const filePath = `./models/${fileName}.txt`;
+
+        if (fs.existsSync(filePath)) {
+            fs.unlinkSync(filePath);
+        }
+    }
 }

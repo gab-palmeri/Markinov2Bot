@@ -1,5 +1,5 @@
 import { Composer } from "grammy";
-import { checkIfGroup } from "../middlewares";
+import { checkIfAdmin, checkIfGroup } from "../middlewares";
 import { MyContext } from "../MyContext";
 
 import MarkovChainWrapper from "../MarkovChainWrapper";
@@ -13,6 +13,22 @@ composer.command("start", async ctx => {
         { parse_mode: "HTML" }
     );
     
+});
+
+composer.command("markov", checkIfGroup, async ctx => {
+
+    const response = MarkovChainWrapper.generateByProbability(ctx.session.markov, 1.0);
+
+    await ctx.reply(response);
+
+});
+
+composer.command("markovclear", checkIfGroup, checkIfAdmin, async ctx => {
+
+    MarkovChainWrapper.eraseModelFile(ctx.chat.id.toString());
+    ctx.session.markov = MarkovChainWrapper.loadOrCreateMarkovChain(ctx.chat.id.toString());
+
+    await ctx.reply("memory erased");
 });
 
 composer.on("message", checkIfGroup, async ctx => {
