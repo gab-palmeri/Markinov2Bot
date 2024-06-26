@@ -43,8 +43,15 @@ composer.on("message", checkIfGroup, async ctx => {
         }, 1000 * 60 * 5);
     }
 
+
+    //if the message is forwarded discard it
+    if(ctx.message.forward_origin != null) return;
+    
     //Add msg to markov chain
     const msg = ctx.message.text || ctx.message.caption;
+
+    ctx.message.forward_origin;
+
     ctx.session.markov.add(msg.split(' '));
 
     //If the user is replying to the bot, the bot is more likely to reply
