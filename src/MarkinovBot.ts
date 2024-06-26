@@ -22,7 +22,7 @@ export default class MarkinovBot {
             .setMyCommands([
 				{command: "start", description: "show start message"},
 				{command: "markov", description: "talk"},
-				{command: "clear", description: "erase bot memory for this chat"}
+				{command: "markovclear", description: "erase bot memory for this chat"}
             ])
             .catch(console.error);
 
