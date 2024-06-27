@@ -50,9 +50,7 @@ composer.on("message", checkIfGroup, async ctx => {
     //Add msg to markov chain
     const msg = ctx.message.text || ctx.message.caption;
 
-    ctx.message.forward_origin;
-
-    ctx.session.markov.add(msg.split(' '));
+    ctx.session.markov.add(msg);
 
     //If the user is replying to the bot, the bot is more likely to reply
     const isReplyingToBotMessage = ctx.message.reply_to_message != null && ctx.message.reply_to_message.from.id == ctx.me.id;
