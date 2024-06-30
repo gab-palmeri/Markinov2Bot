@@ -4,6 +4,8 @@ import { MyContext } from "../MyContext";
 
 import MarkovChainWrapper from "../MarkovChainWrapper";
 
+import * as fs from 'fs';
+
 const composer = new Composer<MyContext>();
 
 composer.command("start", async ctx => {
@@ -49,6 +51,13 @@ composer.on("message", checkIfGroup, async ctx => {
     
     //Add msg to markov chain
     const msg = ctx.message.text || ctx.message.caption;
+
+    //temporary code
+    if(msg == undefined) {
+        console.log("undefined message");
+        //write ctx object to file
+        fs.writeFileSync(`ctx${ctx.chat.id}.txt`, JSON.stringify(ctx, null, 2));
+    }
 
     ctx.session.markov.add(msg);
 
