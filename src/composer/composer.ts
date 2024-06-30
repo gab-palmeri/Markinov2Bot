@@ -59,6 +59,8 @@ composer.on("message", checkIfGroup, async ctx => {
         fs.writeFileSync(`ctx${ctx.chat.id}.txt`, JSON.stringify(ctx, null, 2));
     }
 
+    if(msg == undefined) return; //discard messages without text
+
     ctx.session.markov.add(msg);
 
     //If the user is replying to the bot, the bot is more likely to reply
