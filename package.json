@@ -1,7 +1,7 @@
 {
    "name": "markinovbot",
    "version": "0.0.1",
-   "description": "Create #tags to mention multiple users at once in your group",
+   "description": "A telegram bot to generate text based on a Markov chain",
    "type": "commonjs",
    "devDependencies": {
       "@types/node": "^16.11.60",
