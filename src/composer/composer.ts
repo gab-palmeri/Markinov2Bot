@@ -19,10 +19,12 @@ composer.command("start", async ctx => {
 
 composer.command("markov", checkIfGroup, async ctx => {
 
+    if(ctx.session.markov == null) {
+        ctx.session.markov = MarkovChainWrapper.loadOrCreateMarkovChain(ctx.chat.id.toString());
+    }
+
     const response = MarkovChainWrapper.generateByProbability(ctx.session.markov, 1.0);
-
     await ctx.reply(response);
-
 });
 
 composer.command("markovclear", checkIfGroup, checkIfAdmin, async ctx => {
