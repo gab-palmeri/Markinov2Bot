@@ -10,10 +10,10 @@ const composer = new Composer<MyContext>();
 
 composer.command("start", async ctx => {
 
-    await ctx.reply(
-        "hello. put me in a group and i will talk like you.",
-        { parse_mode: "HTML" }
-    );
+    const isGroup = ctx.chat.type === "group" || ctx.chat.type === "supergroup";
+    const message = isGroup ? "hello. i will start talking like you." : "hello. put me in a group and i will talk like you.";
+
+    await ctx.reply(message);
     
 });
 
