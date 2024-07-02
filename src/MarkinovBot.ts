@@ -90,7 +90,7 @@ export default class MarkinovBot {
 			{retryInterval: 1000},
 		);
 
-		const stopRunner = () => runner.isRunning() && runner.stop();
+		const stopRunner = () => runner.isRunning() && runner.stop() && process.exit(0);
 		process.once("SIGINT", stopRunner);
 		process.once("SIGTERM", stopRunner);
 	}
