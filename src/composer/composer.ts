@@ -24,7 +24,7 @@ composer.command("markov", checkIfGroup, async ctx => {
 
         setInterval(() => {
             MarkovChainWrapper.saveMarkovChain(ctx.session.markov, ctx.chat.id.toString());
-        }, 1000 * 60 * 5);
+        }, 1000 * 60 * 5).unref();
     }
 
     const response = MarkovChainWrapper.generateByProbability(ctx.session.markov, 1.0);
@@ -64,7 +64,7 @@ composer.on("message", checkIfGroup, async ctx => {
         //Save markov chain to file every 10 minutes
         setInterval(() => {
             MarkovChainWrapper.saveMarkovChain(ctx.session.markov, ctx.chat.id.toString());
-        }, 1000 * 60 * 5);
+        }, 1000 * 60 * 5).unref();
     }
 
 
