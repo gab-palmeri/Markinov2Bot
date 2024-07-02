@@ -21,6 +21,10 @@ composer.command("markov", checkIfGroup, async ctx => {
 
     if(ctx.session.markov == null) {
         ctx.session.markov = MarkovChainWrapper.loadOrCreateMarkovChain(ctx.chat.id.toString());
+
+        setInterval(() => {
+            MarkovChainWrapper.saveMarkovChain(ctx.session.markov, ctx.chat.id.toString());
+        }, 1000 * 60 * 5);
     }
 
     const response = MarkovChainWrapper.generateByProbability(ctx.session.markov, 1.0);
