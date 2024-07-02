@@ -22,7 +22,8 @@ export default class MarkinovBot {
             .setMyCommands([
 				{command: "start", description: "show start message"},
 				{command: "markov", description: "talk"},
-				{command: "markovclear", description: "erase bot memory for this chat"}
+				{command: "markovclear", description: "erase bot memory for this chat"},
+				{command: "markovprob", description: "set bot talking probability"},
             ])
             .catch(console.error);
 
@@ -39,7 +40,7 @@ export default class MarkinovBot {
 
 		//Set the session middleware and initialize session data
 		this.bot.use(sequentialize(getSessionKey));
-		this.bot.use(session({getSessionKey, initial: () => ({markov: null})}));
+		this.bot.use(session({getSessionKey, initial: () => ({markov: null, talking_probability: 0.2})}));
 
 		//Set the auto-retry middleware
 		this.bot.api.config.use(autoRetry());

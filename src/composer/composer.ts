@@ -35,6 +35,22 @@ composer.command("markovclear", checkIfGroup, checkIfAdmin, async ctx => {
     await ctx.reply("memory erased");
 });
 
+composer.command("markovprob", checkIfGroup, checkIfAdmin, async ctx => {
+    
+        if(ctx.msg.text == null) return;
+    
+        const probability = parseFloat(ctx.msg.text.split(" ")[1]);
+    
+        if(isNaN(probability)) {
+            await ctx.reply("give me a float number between 0 and 1.");
+            return;
+        }
+    
+        ctx.session.talking_probability = probability;
+        await ctx.reply(`talking probability set to ${probability}.`);
+});
+
+
 composer.on("message", checkIfGroup, async ctx => {
 
     if(ctx.session.markov == null) {
@@ -67,7 +83,7 @@ composer.on("message", checkIfGroup, async ctx => {
 
     //If the user is replying to the bot, the bot is more likely to reply
     const isReplyingToBotMessage = ctx.message.reply_to_message != null && ctx.message.reply_to_message.from.id == ctx.me.id;
-    const talking_probability = isReplyingToBotMessage ? 0.6 : 0.2;
+    const talking_probability = isReplyingToBotMessage ? ctx.session.talking_probability + 0.2: ctx.session.talking_probability;
 
     const response = MarkovChainWrapper.generateByProbability(ctx.session.markov, talking_probability);
 
