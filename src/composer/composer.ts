@@ -45,7 +45,7 @@ composer.command("markovprob", checkIfGroup, checkIfAdmin, async ctx => {
     
         const probability = parseFloat(ctx.msg.text.split(" ")[1]);
     
-        if(isNaN(probability)) {
+        if(isNaN(probability) || probability < 0 || probability > 1) {
             await ctx.reply("give me a float number between 0 and 1.");
             return;
         }
